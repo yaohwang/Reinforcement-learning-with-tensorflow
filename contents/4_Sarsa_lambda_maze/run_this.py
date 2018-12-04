@@ -12,7 +12,9 @@ from RL_brain import SarsaLambdaTable
 
 
 def update():
-    for episode in range(100):
+    for episode in range(2):
+        print '=' * 100
+
         # initial observation
         observation = env.reset()
 
@@ -42,6 +44,8 @@ def update():
             # break while loop when end of this episode
             if done:
                 break
+
+        print '=' * 100
 
     # end of game
     print('game over')

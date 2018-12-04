@@ -17,6 +17,7 @@ class RL(object):
         self.epsilon = e_greedy
 
         self.q_table = pd.DataFrame(columns=self.actions, dtype=np.float64)
+        print self.q_table
 
     def check_state_exist(self, state):
         if state not in self.q_table.index:
@@ -55,8 +56,20 @@ class SarsaLambdaTable(RL):
         self.lambda_ = trace_decay
         self.eligibility_trace = self.q_table.copy()
 
+        print 'actions: ', actions
+        print 'epsilon greedy: ', e_greedy
+        print 'reward decay: ', reward_decay
+        print 'trace decay: ', trace_decay
+        print 'learning rate: ', learning_rate
+        print 'lambda: ', self.lambda_
+
+
     def check_state_exist(self, state):
         if state not in self.q_table.index:
+
+            print 'state: ', state
+            print 'q-tabel columns: ', self.q_table.columns
+
             # append new state to q table
             to_be_append = pd.Series(
                     [0] * len(self.actions),
@@ -70,6 +83,12 @@ class SarsaLambdaTable(RL):
 
     def learn(self, s, a, r, s_, a_):
         self.check_state_exist(s_)
+        
+        print '-' * 100
+        print 'q-table'
+        print self.q_table
+        print
+
         q_predict = self.q_table.loc[s, a]
         if s_ != 'terminal':
             q_target = r + self.gamma * self.q_table.loc[s_, a_]  # next state is not terminal
@@ -83,11 +102,33 @@ class SarsaLambdaTable(RL):
         # self.eligibility_trace.loc[s, a] += 1
 
         # Method 2:
+        print 'eligibility'
+        print self.eligibility_trace
+        print
+
         self.eligibility_trace.loc[s, :] *= 0
         self.eligibility_trace.loc[s, a] = 1
+
+        print 'eligibility'
+        print self.eligibility_trace
+        print
 
         # Q update
         self.q_table += self.lr * error * self.eligibility_trace
 
+        print 'score:'
+        print self.lr
+        print error
+        print
+
+        print 'q-table:'
+        print self.q_table
+        print
+
         # decay eligibility trace after update
         self.eligibility_trace *= self.gamma*self.lambda_
+
+        print 'eligibility:'
+        print self.eligibility_trace
+        print '-' * 100
+        print
