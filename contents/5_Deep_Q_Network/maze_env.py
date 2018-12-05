@@ -19,12 +19,13 @@ if sys.version_info.major == 2:
 else:
     import tkinter as tk
 
-UNIT = 40   # pixels
+UNIT   = 40   # pixels
 MAZE_H = 4  # grid height
 MAZE_W = 4  # grid width
 
 
 class Maze(tk.Tk, object):
+
     def __init__(self):
         super(Maze, self).__init__()
         self.action_space = ['u', 'd', 'l', 'r']
