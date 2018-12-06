@@ -276,7 +276,7 @@ class DeepQNetwork:
 
         q_target[batch_index, eval_act_index] = reward + self.gamma * np.max(q_next, axis=1)
 
-        print 'np.max(q_next, axis=1): %s\n'                % len(np.max(q_next, axis=1)), np.max(q_next, axis=1)
+        print 'np.max(q_next, axis=1): %s\n'                % len(np.max(q_next, axis=1))               , np.max(q_next, axis=1)
         print 'q_target[batch_index, eval_act_index]: %s\n' % len(q_target[batch_index, eval_act_index]), q_target[batch_index, eval_act_index]
 
 
